@@ -902,14 +902,14 @@ public class GTMTE_LapotronicSuperCapacitor extends
         return sum / Math.max(energyOutputValues.size(), 1);
     }
 
-    // Caching avgin and avgout
-    double avgIn = getAvgIn();
-    double avgOut = getAvgOut();
-
     @Override
     public String[] getInfoData() {
         NumberFormat nf = NumberFormat.getNumberInstance();
         int secInterval = DURATION_AVERAGE_TICKS / 20;
+
+        // Caching avgin and avgout
+        double avgIn = getAvgIn();
+        double avgOut = getAvgOut();
 
         final ArrayList<String> ll = new ArrayList<>();
         ll.add(EnumChatFormatting.YELLOW + "Operational Data:" + EnumChatFormatting.RESET);
