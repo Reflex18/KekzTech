@@ -902,6 +902,10 @@ public class GTMTE_LapotronicSuperCapacitor extends
         return sum / Math.max(energyOutputValues.size(), 1);
     }
 
+    // Caching avgin and avgout
+    double avgIn = getAvgIn();
+    double avgOut = getAvgOut();
+
     @Override
     public String[] getInfoData() {
         NumberFormat nf = NumberFormat.getNumberInstance();
@@ -917,12 +921,8 @@ public class GTMTE_LapotronicSuperCapacitor extends
         ll.add("Passive Loss: " + nf.format(passiveDischargeAmount) + "EU/t");
         ll.add("EU IN: " + GT_Utility.formatNumbers(inputLastTick) + "EU/t");
         ll.add("EU OUT: " + GT_Utility.formatNumbers(outputLastTick) + "EU/t");
-        ll.add("Avg EU IN: " + nf.format(getAvgIn()) + " (last " + secInterval + " seconds)");
-        ll.add("Avg EU OUT: " + nf.format(getAvgOut()) + " (last " + secInterval + " seconds)");
-
-    // Caching avgin and avgout
-    double avgIn = getAvgIn();
-    double avgOut = getAvgOut();
+        ll.add("Avg EU IN: " + nf.format(AvgIn) + " (last " + secInterval + " seconds)");
+        ll.add("Avg EU OUT: " + nf.format(AvgOut) + " (last " + secInterval + " seconds)");
 
     // Check if the system is charging or discharging
     if (avgIn > avgOut) {
