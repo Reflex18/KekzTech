@@ -921,14 +921,22 @@ public class GTMTE_LapotronicSuperCapacitor extends
         ll.add("Avg EU OUT: " + nf.format(getAvgOut()) + " (last " + secInterval + " seconds)");
 
         // Check if the system is charging or discharging
-        if (inputLastTick > outputLastTick) {
+        if (getAvgIn() > getAvgOut()) {
             // Calculate time to full if charging
-            double timeToFull = (capacity.longValue() - stored.longValue()) / inputLastTick;
-            ll.add("Time to Full: " + nf.format(timeToFull) + " seconds");
+            if (getAvgIn() != 0) {
+                double timeToFull = (capacity.longValue() - stored.longValue()) / getAvgIn() / 60;
+                ll.add("Time to Full: " + nf.format(timeToFull) + " minutes");
+            } else {
+                ll.add("Completely full");
+            }
         } else {
             // Calculate time to empty if discharging
-            double timeToEmpty = stored.longValue() / outputLastTick;
-            ll.add("Time to Empty: " + nf.format(timeToEmpty) + " seconds");
+            if (getAvgOut() != 0) {
+                double timeToEmpty = stored.longValue() / getAvgOut() / 60;
+                ll.add("Time to Empty: " + nf.format(timeToEmpty) + " minutes");
+            } else {
+                ll.add("Completely empty");
+            }
         }
 
         ll.add(
