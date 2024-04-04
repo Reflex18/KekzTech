@@ -919,6 +919,18 @@ public class GTMTE_LapotronicSuperCapacitor extends
         ll.add("EU OUT: " + GT_Utility.formatNumbers(outputLastTick) + "EU/t");
         ll.add("Avg EU IN: " + nf.format(getAvgIn()) + " (last " + secInterval + " seconds)");
         ll.add("Avg EU OUT: " + nf.format(getAvgOut()) + " (last " + secInterval + " seconds)");
+
+        // Check if the system is charging or discharging
+        if (inputLastTick > outputLastTick) {
+            // Calculate time to full if charging
+            double timeToFull = (capacity.longValue() - stored.longValue()) / inputLastTick;
+            ll.add("Time to Full: " + nf.format(timeToFull) + " seconds");
+        } else {
+            // Calculate time to empty if discharging
+            double timeToEmpty = stored.longValue() / outputLastTick;
+            ll.add("Time to Empty: " + nf.format(timeToEmpty) + " seconds");
+        }
+
         ll.add(
                 "Maintenance Status: " + ((super.getRepairStatus() == super.getIdealStatus())
                         ? EnumChatFormatting.GREEN + "Working perfectly" + EnumChatFormatting.RESET
