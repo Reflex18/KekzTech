@@ -944,21 +944,6 @@ public class GTMTE_LapotronicSuperCapacitor extends
                 ll.add("Completely empty");
             }
         }
-        
-        // Method to format time in seconds, minutes, days, and years
-        private String formatTime(double time) {
-            if (time < 60) {
-                return String.format("%.2f seconds", time);
-            } else if (time < 3600) {
-                return String.format("%.2f minutes", time / 60);
-            } else if (time < 86400) {
-                return String.format("%.2f hours", time / 3600);
-            } else if (time < 31536000) {
-                return String.format("%.2f days", time / 86400);
-            } else {
-                return String.format("%.2f years", time / 31536000);
-            }
-        }        
         ll.add(
                 "Maintenance Status: " + ((super.getRepairStatus() == super.getIdealStatus())
                         ? EnumChatFormatting.GREEN + "Working perfectly" + EnumChatFormatting.RESET
@@ -997,6 +982,21 @@ public class GTMTE_LapotronicSuperCapacitor extends
 
         final String[] a = new String[ll.size()];
         return ll.toArray(a);
+    }
+
+    // Method to format time in seconds, minutes, days, and years
+    private String formatTime(double time) {
+        if (time < 60) {
+            return String.format("%.2f seconds", time);
+        } else if (time < 3600) {
+            return String.format("%.2f minutes", time / 60);
+        } else if (time < 86400) {
+            return String.format("%.2f hours", time / 3600);
+        } else if (time < 31536000) {
+            return String.format("%.2f days", time / 86400);
+        } else {
+            return String.format("%.2f years", time / 31536000);
+        }
     }
 
     @Override
