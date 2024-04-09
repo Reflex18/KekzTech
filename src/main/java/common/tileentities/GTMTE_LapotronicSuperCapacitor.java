@@ -928,20 +928,37 @@ public class GTMTE_LapotronicSuperCapacitor extends
         if (avgIn > avgOut) {
             // Calculate time to full if charging
             if (avgIn != 0) {
-                double timeToFull = (capacity.longValue() - stored.longValue()) / avgIn / 60;
-                ll.add("Time to Full: " + nf.format(timeToFull) + " minutes");
+                double timeToFull = (capacity.longValue() - stored.longValue()) / avgIn;
+                String timeToFullString = formatTime(timeToFull);
+                ll.add("Time to Full: " + timeToFullString);
             } else {
                 ll.add("Completely full");
             }
         } else {
             // Calculate time to empty if discharging
             if (avgOut != 0) {
-                double timeToEmpty = stored.longValue() / avgOut / 60;
-                ll.add("Time to Empty: " + nf.format(timeToEmpty) + " minutes");
+                double timeToEmpty = stored.longValue() / avgOut;
+                String timeToEmptyString = formatTime(timeToEmpty);
+                ll.add("Time to Empty: " + timeToEmptyString);
             } else {
                 ll.add("Completely empty");
             }
         }
+        
+        // Method to format time in seconds, minutes, days, and years
+        private String formatTime(double time) {
+            if (time < 60) {
+                return String.format("%.2f seconds", time);
+            } else if (time < 3600) {
+                return String.format("%.2f minutes", time / 60);
+            } else if (time < 86400) {
+                return String.format("%.2f hours", time / 3600);
+            } else if (time < 31536000) {
+                return String.format("%.2f days", time / 86400);
+            } else {
+                return String.format("%.2f years", time / 31536000);
+            }
+        }        
         ll.add(
                 "Maintenance Status: " + ((super.getRepairStatus() == super.getIdealStatus())
                         ? EnumChatFormatting.GREEN + "Working perfectly" + EnumChatFormatting.RESET
