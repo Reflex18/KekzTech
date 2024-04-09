@@ -931,8 +931,6 @@ public class GTMTE_LapotronicSuperCapacitor extends
                 double timeToFull = (capacity.longValue() - stored.longValue()) / avgIn;
                 String timeToFullString = formatTime(timeToFull);
                 ll.add("Time to Full: " + timeToFullString);
-            } else {
-                ll.add("Completely full");
             }
         } else {
             // Calculate time to empty if discharging
@@ -940,8 +938,6 @@ public class GTMTE_LapotronicSuperCapacitor extends
                 double timeToEmpty = stored.longValue() / avgOut;
                 String timeToEmptyString = formatTime(timeToEmpty);
                 ll.add("Time to Empty: " + timeToEmptyString);
-            } else {
-                ll.add("Completely empty");
             }
         }
         ll.add(
@@ -986,7 +982,9 @@ public class GTMTE_LapotronicSuperCapacitor extends
 
     // Method to format time in seconds, minutes, days, and years
     private String formatTime(double time) {
-        if (time < 60) {
+        if (time < 1) {
+            return "Completely " + (time < 0 ? "empty" : "full");
+        } else if (time < 60) {
             return String.format("%.2f seconds", time);
         } else if (time < 3600) {
             return String.format("%.2f minutes", time / 60);
